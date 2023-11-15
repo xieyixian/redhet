@@ -38,11 +38,13 @@ public class BookingValidator {
         if (customer == null) {
             throw new CustomerNotExist("Customer not Exist");
         } else {
-          booking.setCustomer(customer);  
+          booking.setCustomer(customer);
         }
-
-        if (HotelNotExists(booking.getHotelId())) {
+        Hotel hotel = HotelNotExists(booking.getHotel().getId());
+        if (hotel == null) {
             throw new HotelNotExist("Hotel not Exist");
+        } else {
+            booking.setHotel(hotel);
         }
     }
 
@@ -55,14 +57,14 @@ public class BookingValidator {
         }
         return customer;
     }
-    boolean HotelNotExists(long hotelId) {
+    Hotel HotelNotExists(long hotelId) {
         Hotel hotel = null;
         try {
             hotel = hotlecrud.findById(hotelId);
         } catch (NoResultException e) {
             // ignore
         }
-        return hotel == null;
+        return hotel ;
     }
 
 }

@@ -16,8 +16,10 @@ public class BookingRepository {
     @Inject
     @Named("logger")
     Logger log;
+
     @Inject
     EntityManager em;
+
     public List<Booking> findAll() {
         return em.createQuery("SELECT b FROM Booking b", Booking.class).getResultList();
     }
@@ -34,7 +36,7 @@ public class BookingRepository {
         Booking existingBooking = em.find(Booking.class, id);
         if (existingBooking != null) {
             existingBooking.setCustomer(booking.getCustomer());
-            existingBooking.setHotelId(booking.getHotelId());
+            existingBooking.setHotel(booking.getHotel());  // Use setHotel instead of setHotelId
             existingBooking.setCheckInDate(booking.getCheckInDate());
             existingBooking.setCheckOutDate(booking.getCheckOutDate());
         }

@@ -1,5 +1,7 @@
 package uk.ac.newcastle.enterprisemiddleware.hotel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import uk.ac.newcastle.enterprisemiddleware.booking.Booking;
 import uk.ac.newcastle.enterprisemiddleware.customer.Customer;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @NamedQueries({
@@ -43,6 +46,10 @@ public class Hotel implements Serializable {
     @Size(min = 6, max = 6, message = "Postal code must be 6 characters long")
     @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Postal code must be alphanumeric")
     private String postalCode;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Booking> bookings;
 
     // Constructors
 

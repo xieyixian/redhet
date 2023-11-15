@@ -73,13 +73,13 @@ public class BookingService {
         try {
             HotelService hotelService = new HotelService();
             hotelService.checkHotelAvailability(
-                    booking.getHotelId(),
+                    booking.getHotel().getId(),
                     booking.getCheckInDate(),
                     booking.getCheckOutDate()
             );
         } catch (ClientErrorException e) {
             if (e.getResponse().getStatusInfo() == Response.Status.NOT_FOUND) {
-                throw new InvalidHotelException("The hotel with ID " + booking.getHotelId() + " does not exist", e);
+                throw new InvalidHotelException("The hotel with ID " + booking.getHotel().getId() + " does not exist", e);
             } else {
                 throw e;
             }

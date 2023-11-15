@@ -1,6 +1,7 @@
 package uk.ac.newcastle.enterprisemiddleware.booking;
 
 import uk.ac.newcastle.enterprisemiddleware.customer.Customer;
+import uk.ac.newcastle.enterprisemiddleware.hotel.Hotel;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,13 +20,13 @@ public class Booking implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id") // Customize the join column name if needed
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Column(name = "hotel_id", nullable = false)
-    private Long hotelId;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
 
     @Column(name = "check_in_date", nullable = false)
     private LocalDate checkInDate;
@@ -39,9 +40,9 @@ public class Booking implements Serializable {
         // Default constructor
     }
 
-    public Booking(Customer customer, Long hotelId, LocalDate checkInDate, LocalDate checkOutDate) {
+    public Booking(Customer customer, Hotel hotel, LocalDate checkInDate, LocalDate checkOutDate) {
         this.customer = customer;
-        this.hotelId = hotelId;
+        this.hotel = hotel;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
     }
@@ -51,7 +52,6 @@ public class Booking implements Serializable {
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -65,12 +65,12 @@ public class Booking implements Serializable {
         this.customer = customer;
     }
 
-    public Long getHotelId() {
-        return hotelId;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
     public LocalDate getCheckInDate() {
